@@ -34,7 +34,8 @@ var msgShowing = false;
 service.interceptors.response.use(
     response => {
         const res = response.data;
-        if (res.status === 20000) {
+        console.log(response,11111111111111);
+        if (res.status === 1) {
             return res.data;
         } else {
             if (!msgShowing) {

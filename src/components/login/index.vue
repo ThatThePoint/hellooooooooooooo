@@ -25,6 +25,7 @@
 </template>
 <script>
 import Cookie from "js-cookie";
+import {Login} from '@/api/user';
 export default {
     data() {
         return {
@@ -54,15 +55,15 @@ export default {
             }
             this.form.email = this.form.email.trim();
             this.form.password = this.form.password.trim();
-            // let param = {
-            //     username:this.form.email,
-            //     password:  this.form.password
-            // };
-            // API.user_login(param).then( (res) => {
-            // this.setCookie(param.username, param.password, 7,res);
-            this.$router.push({
-                path: "/inf-collection"
-            });
+            let param = {
+                username:this.form.email,
+                password:  this.form.password
+            };
+            // Login(param).then( (res) => {
+            //     this.setCookie(param.username, param.password, 7,res);
+                this.$router.push({
+                    path: "/inf-collection"
+                });
             // });
         },
         //非空验证
@@ -76,44 +77,6 @@ export default {
                 return false;
             }
             return true;
-        },
-        /**
-         * 压缩html : 清除换行符,清除制表符,去掉注释标记
-         * @param $string
-         * @return压缩后的$string
-         * */
-
-        compress_html(str) {
-            console.log(str,1111111111111)
-            str = str.replace("\r\n", ""); //清除换行符
-            str = str.replace("\n",'')
-            str = str.replace("\t",'')//清除制表符
-            console.log(str)
-
-            // $pattern=array(
-            // "/> *([^ ]*) *</",//去掉注释标记
-            // "/[\s]+/",
-            // "/<!--[^!]*-->/",
-            // "/\" /",
-            // "/ \"/",
-            // "'/\*[^*]*\*/'"  );
-
-            // $replace=array (
-            // ">\\1<",
-            // " ",
-            // "",
-            // "\"",
-            // "\"",
-            // ""
-            // );
-            // return preg_replace($pattern, $replace, $string);
-        },
-        Message(message, type) {
-            type = type || "warning";
-            this.$message({
-                message,
-                type
-            });
         },
         setCookie(c_name, c_pwd, exdays, res) {
             var exdate = new Date(); //获取时间

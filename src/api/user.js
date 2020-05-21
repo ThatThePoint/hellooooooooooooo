@@ -53,3 +53,13 @@ export function GetCauseList(data) {
         method: 'post'
     })
 }
+
+// 登录
+
+
+export function Login(data) {
+    return fetch({
+        url: `/Home/Login?${stringify(data)}`,
+        method: 'post'
+    })
+}

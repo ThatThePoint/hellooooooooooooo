@@ -191,7 +191,7 @@ export default {
             const vm = this;
             const params = this.form;
             vm.loadingTable = true;
-            GetCauseList(params).then((data)=>{
+            GetCauseList({params}).then((data)=>{
                 this.tableData = data.content || [];
                 this.form.total = data.totalElements || 0;
                 vm.loadingTable = false;
@@ -228,12 +228,6 @@ export default {
                 this.form.page = 1;
             }
             vm.getTable();
-        },
-        close (isRefresh) {
-            this.rowInfo = null;
-            this.addVisible = this.editVisible = false;
-            if(!isRefresh || typeof(isRefresh) == "function"){return false}
-            this.getTable();
         },
         // 删除
         delAccount () {

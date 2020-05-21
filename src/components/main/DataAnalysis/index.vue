@@ -235,42 +235,6 @@ export default {
             if(!isRefresh || typeof(isRefresh) == "function"){return false}
             this.getTable();
         },
-        // 状态改变
-        changeAccountStatus (info) {
-            API.updAccountStatus(info.drugUserId,info.status).then((data)=>{
-                if (data) {
-                    this.$message({
-                        type: 'success',
-                        message: '操作成功!',
-                        duration: 5 * 1000
-                    })
-                }
-            })
-        },
-        // 编辑
-        editAccount (info) {
-            this.dialogTitle = '编辑账号';
-            this.addOrEdit = 'edit';
-            this.rowInfo = info;
-            this.editVisible = true;
-        },
-        // 重置密码
-        resetPwd (info) {
-            this.$confirm('确定重置此账号密码吗?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                API.resetPwd(info.drugUserId).then((data)=>{
-                    if (data) {
-                        this.$message({
-                            type: 'success',
-                            message: '操作成功!'
-                        });
-                    }
-                })
-            })
-        },
         // 删除
         delAccount () {
             this.$confirm('确定删除此账号吗?', '提示', {
@@ -289,12 +253,12 @@ export default {
                 // });
             });
         },
-        inputNum (field) {
-            this.form[field] = this.form[field].replace(/[^\d]/g,'');
-        },
-        replaceSpace (field) {
-            this.form[field] = this.form[field].replace(/\s+/g,"");
-        }
+        // inputNum (field) {
+        //     this.form[field] = this.form[field].replace(/[^\d]/g,'');
+        // },
+        // replaceSpace (field) {
+        //     this.form[field] = this.form[field].replace(/\s+/g,"");
+        // }
     }
 }
 </script>

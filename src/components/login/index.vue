@@ -25,7 +25,7 @@
 </template>
 <script>
 import Cookie from "js-cookie";
-import {Login} from '@/api/user';
+// import {Login} from '@/api/user';
 export default {
     data() {
         return {
@@ -38,9 +38,6 @@ export default {
             imgUrl: ""
         };
     },
-    mounted() {
-        this.compress_html(document.getElementById('app').innerHTML)
-    },
     methods: {
         keyup(e) {
             if (e.keyCode == 13) {
@@ -49,21 +46,21 @@ export default {
         },
         //登录
         onLogin() {
-            let isEmpty = this.isEmpty();
-            if (!isEmpty) {
-                return;
-            }
-            this.form.email = this.form.email.trim();
-            this.form.password = this.form.password.trim();
-            let param = {
-                username:this.form.email,
-                password:  this.form.password
-            };
+            // let isEmpty = this.isEmpty();
+            // if (!isEmpty) {
+            //     return;
+            // }
+            // this.form.email = this.form.email.trim();
+            // this.form.password = this.form.password.trim();
+            // let param = {
+            //     username:this.form.email,
+            //     password:  this.form.password
+            // };
             // Login(param).then( (res) => {
             //     this.setCookie(param.username, param.password, 7,res);
-                this.$router.push({
-                    path: "/inf-collection"
-                });
+            this.$router.push({
+                name: "InfCollection"
+            });
             // });
         },
         //非空验证

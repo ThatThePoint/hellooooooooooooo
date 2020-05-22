@@ -191,7 +191,7 @@ export default {
             const vm = this;
             const params = this.form;
             vm.loadingTable = true;
-            GetCauseList({params}).then((data)=>{
+            GetCauseList(params).then((data)=>{
                 this.tableData = data.content || [];
                 this.form.total = data.totalElements || 0;
                 vm.loadingTable = false;

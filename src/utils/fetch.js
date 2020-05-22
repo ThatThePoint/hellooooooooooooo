@@ -1,8 +1,7 @@
 // 封装fetch方法
 import axios from 'axios';
 import { Message } from 'element-ui';
-import router from '../router';
-import { logoutAccount } from '@/utils/common';
+
 // 创建axios实例
 const service = axios.create({
     baseURL: process.env.BASE_API,
@@ -46,23 +45,6 @@ service.interceptors.response.use(
                     duration: 5 * 1000,
                     onClose: function() {
                         msgShowing = false;
-                    }
-                });
-            }
-            if (res.status === 10004) {
-                router.push({
-                    name: 'Home',
-                    query: {
-                        _t: new Date().getTime()
-                    }
-                });
-            }
-            if (res.status === 10008) {
-                logoutAccount();
-                router.push({
-                    name: 'Login',
-                    query: {
-                        _t: new Date().getTime()
                     }
                 });
             }

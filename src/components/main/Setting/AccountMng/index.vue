@@ -2,10 +2,10 @@
     <div class="account-mng">
         <el-form :model="form" ref="form" inline class="form page-search" label-width="90px">
              <el-form-item label="账号：" prop="drugUserEmail">
-                <el-input size="small" v-model.trim="form.loginName" @input="replaceSpace('drugUserEmail')" clearable placeholder="请输入"></el-input>
+                <el-input size="small" v-model.trim="form.loginName" clearable placeholder="请输入"></el-input>
             </el-form-item>
             <el-form-item label="姓名：" prop="drugUserName">
-                <el-input size="small" v-model.trim="form.name" @input="replaceSpace('drugUserName')" clearable placeholder="请输入"></el-input>
+                <el-input size="small" v-model.trim="form.name" clearable placeholder="请输入"></el-input>
             </el-form-item>
             <el-form-item label="角色：" prop="roleIdList">
                 <el-select size="small" v-model="form.role" clearable placeholder="请选择">
@@ -71,7 +71,7 @@
 import QueryReset from 'common/QueryReset';
 import VPagination from 'common/VPagination';
 import AddAccount from './AddAccount';
-import {GetUserList}  from 'api/user';
+import { GetUserList, DeleteUserinfo }  from 'api/user';
 import {DutyList,CarTypeList,SubrogationTypeList,cityList} from '@/components/commonData';
 
 // import {reqRoleList} from 'api/role';
@@ -146,7 +146,7 @@ export default {
                 },
                 {
                     label: '归属城市',
-                    name: 'dutyCity'
+                    name: 'city'
                 },
                 {
                     label: '更新人',
@@ -159,7 +159,7 @@ export default {
                 },
                 {
                     label: '密码',
-                    name: 'pasword'
+                    name: 'password'
                 },
                 {
                     label: '操作',
@@ -191,10 +191,9 @@ export default {
             const params = this.form;
             vm.loadingTable = true;
             GetUserList(params).then((data)=>{
-                console.log(data,'data')
-                // this.tableData = data.content || [];
-                // this.form.total = data.totalElements || 0;
-                // vm.loadingTable = false;
+                this.tableData = data.userlist || [];
+                this.form.total = data.total || 0;
+                this.loadingTable = false;
             }).catch(()=>{
                 vm.loadingTable = false;
             })
@@ -216,8 +215,13 @@ export default {
             this.getTable();
         },
         // 重置
-        reset (formName) {
-            this.$refs[formName].resetFields();
+        reset () {
+            this.form = {
+                name: null,
+                loginName: null,
+                city: null,
+                role: null
+            }
         },
         reload (val,tag) {
             const vm = this;
@@ -278,16 +282,24 @@ export default {
             })
         },
         // 删除
-        delAccount () {
+        delAccount (row) {
             this.$confirm('确定删除此账号吗?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                this.$message({
-                    type: 'success',
-                    message: '删除成功!'
-                });
+                 DeleteUserinfo({id: row.id}).then((data)=>{
+                    if (data.status === 1) {
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        });
+                    }
+                    this.getTable();
+                }).catch(()=>{
+                    
+                })
+
             }).catch(() => {
                 // this.$message({
                 //     type: 'info',
@@ -295,12 +307,6 @@ export default {
                 // });
             });
         },
-        inputNum (field) {
-            this.form[field] = this.form[field].replace(/[^\d]/g,'');
-        },
-        replaceSpace (field) {
-            this.form[field] = this.form[field].replace(/\s+/g,"");
-        }
     }
 }
 </script>

@@ -3,10 +3,12 @@ import axios from 'axios';
 import { Message } from 'element-ui';
 
 // 创建axios实例
+
 const service = axios.create({
     baseURL: process.env.BASE_API,
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "token": sessionStorage.getItem('token')
     },
     transformRequest: [function(data) {
         // Do whatever you want to transform the data
@@ -16,26 +18,25 @@ const service = axios.create({
     withCredentials: true
 });
 
-// // request拦截器
-// service.interceptors.request.use(config => {
-//     if (store.getters.token) {
-//         config.headers['X-Token'] = store.getters.token; // 让每个请求携带自定义token 请根据实际情况自行修改
-//     }
-//     return config;
-// }, error => {
-//     // Do something with request error
-//     console.log(error); // for debug
-//     Promise.reject(error);
-// });
+// request拦截器
+service.interceptors.request.use(config => {
+    let token = sessionStorage.getItem('token');
+    if (token) {
+        config.headers['token'] = token; // 让每个请求携带自定义token 请根据实际情况自行修改
+    }
+    return config;
+}, error => {
+    // Do something with request error
+    Promise.reject(error);
+});
 
 var msgShowing = false;
 // respone拦截器
 service.interceptors.response.use(
     response => {
-        const res = response.data;
-        console.log(response,11111111111111);
+        const res = response.data || res.excelUrl;
         if (res.status === 1) {
-            return res.data;
+            return res;
         } else {
             if (!msgShowing) {
                 msgShowing = true;

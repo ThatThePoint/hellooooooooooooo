@@ -49,6 +49,7 @@
 </template>
 <script>
 import {isMobileOrPhone} from '@/utils/common';
+import { SubmitCauseinfo } from 'api/user';
 import {DutyList,CarTypeList,SubrogationTypeList,cityList} from '@/components/commonData';
 export default {
     props: {
@@ -92,7 +93,7 @@ export default {
             DutyList,CarTypeList,SubrogationTypeList,
             rules: {
                 ReportCode: [
-                    { required: true, message: '请输入报案号', trigger: 'blur', type: 'email' },
+                    { required: true, message: '请输入报案号', trigger: 'blur' },
                 ],
                 RegisterCode: [
                     { required: true, message: '请输入姓名', trigger: 'blur' }
@@ -223,20 +224,19 @@ export default {
                 if (valid && !vm.saving) {
                     // const params = this.form;
                     vm.saving = true;
+                    
                     if (!vm.info) {
-                        // API.addAccount(params).then((data)=>{
-                        //     vm.saving = false;
-                        //     if (data) {
-                        //         this.$message({
-                        //             type: 'success',
-                        //             message: '保存成功!',
-                        //             duration: 5 * 1000
-                        //         })
-                        //         this.cancel(true);
-                        //     }
-                        // }).catch(()=>{
-                        //     vm.saving = false;
-                        // })
+                        SubmitCauseinfo(vm.form).then((data)=>{
+                            if (data.status === 1) {
+                                this.$message({
+                                    type: 'success',
+                                    message: '提交成功!',
+                                    duration: 3000
+                                })
+                            }
+                        }).catch(()=>{
+                            vm.loadingTable = false;
+                        })
                     } else {
                         // API.updAccount(params).then((data)=>{
                         //     vm.saving = false;

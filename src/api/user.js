@@ -63,3 +63,18 @@ export function Login(data) {
         method: 'post'
     })
 }
+
+//导出案件
+export function GetCauseListExcel(data) {
+    return fetch({
+        url: `/Home/GetCauseExcel?${stringify(data)}`,
+        method: 'post'
+    })
+}
+//下载excel
+export function LoadExcel(excelname) {
+    return fetch({
+        url: `${excelname}`,
+        method: 'get'
+    })
+}

@@ -27,8 +27,8 @@
                     <el-option v-for="(role,i) in SubrogationTypeList" :key="i" :label="role" :value="role"></el-option>
                 </el-select>
             </el-form-item>
-             <el-form-item label="代位金额（元）：" prop="roleIdList" >
-                 <el-input size="small" v-model="form.drugUserName" type="number" placeholder="请输入"></el-input>
+             <el-form-item label="代位金额（元）：" prop="SubrogationAmount" >
+                 <el-input size="small" v-model="form.SubrogationAmount" type="number" placeholder="请输入"></el-input>
             </el-form-item>
              <el-form-item label="应追偿金额（元）：" prop="ShouldAmount" >
                 <el-input size="small" v-model="form.ShouldAmount"  type="number" placeholder="请输入"></el-input>
@@ -43,6 +43,7 @@
             </el-form-item>
         </el-form>
         <div class="footer">
+            <el-button size="large"  @click="reset('accountForm')">重置</el-button>
             <el-button size="large" type="primary" @click="submit('accountForm')">提交</el-button>
         </div>
     </div>
@@ -96,10 +97,10 @@ export default {
                     { required: true, message: '请输入报案号', trigger: 'blur' },
                 ],
                 RegisterCode: [
-                    { required: true, message: '请输入姓名', trigger: 'blur' }
+                    { required: true, message: '请输入立案号', trigger: 'blur' }
                 ],
                 Plate: [
-                    { required: true, message: '请输入立案号', trigger: 'blur' },
+                    { required: true, message: '请输入车牌号', trigger: 'blur' },
                 ],
                 CarType: [
                     { required: true, message: '请选择车辆类型', trigger: 'change' }
@@ -110,8 +111,11 @@ export default {
                 SubrogationType: [
                     { required: true, message: '请选择代位类型', trigger: 'change' }
                 ],
+                SubrogationAmount: [
+                    { required: true, message: '请输入代位金额', trigger: 'blur' }
+                ],
                 ShouldAmount: [
-                    { required: true, message: '请输入应追偿金额', trigger: 'change' }
+                    { required: true, message: '请输入应追偿金额', trigger: 'blur' }
                 ],
                 Note: [
                     { required: false, message: '请选择备注', trigger: 'change' }
@@ -146,6 +150,10 @@ export default {
         },
         handlePreview(file) {
             console.log(file);
+        },
+        // 重置
+        reset(formName) {
+            this.$refs[formName].resetFields();
         },
         // 角色列表
         getRole () {

@@ -58,8 +58,8 @@ export default {
             }
             Login(param).then( (res) => {
                 sessionStorage.setItem('token', res.currentMember.id)
-                console.log('ffff', res.currentMember.id, sessionStorage.getItem('token'))
-
+                console.log('ffff', res.currentMember.id, sessionStorage.getItem('token'),res)
+                
                 this.setCookie(param.username, param.password, 7,res);
                 this.$router.push({
                     name: "InfCollection"

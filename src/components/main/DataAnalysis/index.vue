@@ -74,8 +74,8 @@
                         <template v-else-if="item.name == 'operate'">
                             <!-- <span class="color-btn edit" @click="editAccount">编辑</span>
                             <span class="color-btn del" @click="delAccount">删除</span>-->
-                            <el-button @click="editAccount(scope.row)" size="mini">编辑</el-button>
-                            <el-button @click="resetPwd(scope.row)" size="mini">重置密码</el-button>
+                            <!-- <el-button @click="editAccount(scope.row)" size="mini">编辑</el-button>
+                            <el-button @click="resetPwd(scope.row)" size="mini">重置密码</el-button> -->
                             <!-- <el-button @click="delAccount" size="mini" type="danger" plain>删除</el-button> -->
                         </template>
                         <span v-else>{{scope.row[item.name]}}</span>
@@ -96,7 +96,7 @@ import QueryReset from "common/QueryReset";
 import VPagination from "common/VPagination";
 import axios from "axios";
 // import * as API from 'api/account';
-import { GetCauseList, GetCauseListExcel, LoadExcel } from "api/user";
+import { GetCauseList, GetCauseListExcel } from "api/user";
 import {
     DutyList,
     CarTypeList,
@@ -127,14 +127,10 @@ export default {
                 subrogationType: null, //代位类型
                 page: 1,
                 pageSize: 10,
-                listType: 1
+                listType: 2
             },
             total: 0,
             roleList: [
-                {
-                    roleName: "全部",
-                    roleId: 1
-                },
                 {
                     roleName: "省公司",
                     roleId: 2
@@ -147,7 +143,7 @@ export default {
             // 地市	报案号	立案号	车牌号		事故责任	代位金额	应追偿金额
             headerList: [
                 {
-                    label: "序号",
+                    label: "唯一id",
                     name: "id",
                     width: "130px"
                 },
@@ -181,7 +177,7 @@ export default {
                 },
                 {
                     label: "代位金额",
-                    name: "saleType"
+                    name: "subrogationAmount"
                 },
                 {
                     label: "应追偿金额",
@@ -196,11 +192,6 @@ export default {
                     name: "submitTime",
                     width: "175px"
                 },
-                {
-                    label: "操作",
-                    name: "operate",
-                    width: "200px"
-                }
             ],
             tableData: [],
             rowInfo: null
@@ -232,9 +223,6 @@ export default {
             vm.loadingTable = true;
             GetCauseListExcel(params)
                 .then(data => {
-                    // console.log(data);
-                    // LoadExcel(data.excelUrl);
-                    // console.log(process.env.BASE_API + "/" + data.excelUrl);
                     const elink = document.createElement("a");
                     elink.download = '数据分析.xls';
                     elink.style.display = "none";

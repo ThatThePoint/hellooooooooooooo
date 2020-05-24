@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import Cookie from "js-cookie";
 export default {
     props: {
         menuList : {
@@ -59,9 +60,13 @@ export default {
     },
     mounted () {
         this.getSideTitle()
+
+       
     },
     methods: {
-        getSideTitle(){          
+        getSideTitle(){  
+            const userInfo = JSON.parse(Cookie.get("userInfo"))
+            //  console.log(JSON.parse(Cookie.get("userInfo")))        
             let titleList = [
                 {
                     icon: 'el-icon-s-home',
@@ -69,46 +74,6 @@ export default {
                     title: '首页',
                     display: true
                 },
-                // {
-                //     icon: 'el-icon-s-management',
-                //     index: "/projectTitle-mng",
-                //     title: "清洗",
-                //     display: true,
-                //     subs: [
-                //         {
-                //             index: "/enterprise-mng",
-                //             title: "· 人工清洗主名",
-                //             display: true
-                //         },
-                //         {
-                //             index: "/project-mng",
-                //             title: "· 人工清洗别名",
-                //             display: true
-                //         },
-                //         //{
-                //         //     index: "/product-mng",
-                //         //     title: "· 产品管理",
-                //         //     display: true
-                //         // }
-                //     ]
-                // },
-                // {
-                //     icon: 'el-icon-office-building',
-                //     index: "/hospitalTitle-mng",
-                //     title: "审核",
-                //     display: true,
-                //     subs: [
-                //         {
-                //             index: "/hospital-mng",
-                //             title: "· 审核--主名",
-                //             display: true
-                //         },{
-                //             index: "/department-mng",
-                //             title: "· 审核--别名",
-                //             display: true
-                //         }
-                //     ]
-                // },
                 {
                     icon: 'el-icon-search',
                     index: "/data-analysis",
@@ -121,119 +86,19 @@ export default {
                     title: "账号管理",
                     display: true,
                 }
-
-                // {
-                //     icon: 'el-icon-search',
-                //     index: "/CheckMain",
-                //     title: "审核主名",
-                //     display: true,
-                //     subs: [
-                //         {
-                //             index: "/CheckMain",
-                //             title: "转为主名",
-                //             display: true
-                //         },
-                //     ]
-                // },
-                // {
-                //     icon: 'el-icon-search',
-                //     index: "/CheckMain",
-                //     title: "审核别名",
-                //     display: true,
-                //     subs: [
-                //         {
-                //             index: "/CheckAnother",
-                //             title: "转为别名",
-                //             display: true
-                //         }
-                        
-                //     ]
-                // },
-                // {
-                //     icon: 'el-icon-reading',
-                //     index: "/article",
-                //     title: "文章管理",
-                //     display: true,
-                //     subs: [
-                //         {
-                //             index: "/articleList",
-                //             title: "· 文章列表",
-                //             display: true
-                //         },{
-                //             index: "/sort",
-                //             title: "· 分类管理",
-                //             display: true
-                //         }
-                //     ]
-                // },
-                // {
-                //     icon: 'el-icon-s-promotion',
-                //     index: "/activity-mng",
-                //     title: "活动管理",
-                //     display: true,
-                //     subs: [
-                //         {
-                //             index: "/activitySort",
-                //             title: "· 活动分类",
-                //             display: true
-                //         },
-                //         {
-                //             index: "/activityList",
-                //             title: "· 活动列表",
-                //             display: true
-                //         },
-                //         {
-                //             index: "/insuranceList",
-                //             title: "· 内部活动统计",
-                //             display: true
-                //         },
-
-                //     ]
-                // },
-                // {
-                //     icon: 'el-icon-tickets',
-                //     index: "/workOrder-mng",
-                //     title: "工单管理",
-                //     display: true,
-                //     subs: [
-                //         {
-                //             index: "/workOrderAll",
-                //             title: "· 全部工单",
-                //             display: true
-                //         },
-                //         {
-                //             index: "/workOrderSet",
-                //             title: "· 工单设置",
-                //             display: true
-                //         }
-                //     ]
-                // },
-                // {
-                //     icon: 'el-icon-setting',
-                //     index: "/setting",
-                //     title: "系统设置",
-                //     display: true,
-                //     subs: [
-                //         {
-                //             index: "/account-mng",
-                //             title: "· 账号管理",
-                //             display: true
-                //         },{
-                //             index: "/role-mng",
-                //             title: "· 角色管理",
-                //             display: true
-                //         },{
-                //             index: "/vx-mng",
-                //             title: "· 微信账号管理",
-                //             display: true
-                //         },{
-                //             index: "/sys-logs",
-                //             title: "· 系统日志",
-                //             display: true
-                //         }
-                //     ]
-                // }
             ];
+            if(userInfo && userInfo.currentMember&&userInfo.currentMember.memberType){
+                if(userInfo.currentMember.memberType==3){
+                    titleList=[ {
+                        icon: 'el-icon-s-home',
+                        index: '/inf-collection',
+                        title: '首页',
+                        display: true
+                    },]
+                }
+            }else{
+                titleList=[]
+            }
             this.menu=titleList;
         }
     }

@@ -128,7 +128,7 @@ export default {
             ],
             headerList: [
                 {
-                    label: '序号',
+                    label: '唯一id',
                     name: 'id',
                     width:"130px"
                 },

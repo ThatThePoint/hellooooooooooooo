@@ -9,7 +9,7 @@ const test = {
     // 线上
 const production = {
     NODE_ENV: '"production"',
-    BASE_API: '"http://localhost:8110"'
+    BASE_API: '"http://digitalcamp.oicp.io:56031/api"'
 };
 
 module.exports = target == 'build' ? production : test;

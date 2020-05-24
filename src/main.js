@@ -4,13 +4,48 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store';
-
+import Cookie from 'js-cookie';
 import "babel-polyfill"
 // import 'normalize.css'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.config.productionTip = false
 
+
+
+
+router.beforeEach((to, from, next) => {
+    console.log(Cookie.get("userInfo"))
+    const userInfo = Cookie.get("userInfo") ? JSON.parse(Cookie.get("userInfo")) : null
+
+    // console.log(userInfo)
+    // console.log(to)
+    if (to.name == 'Login') {
+        if (to.name == 'Login') {
+            if(JSON.parse(Cookie.get("userInfo"))){
+                Cookie.remove("userInfo")
+            }
+            next();
+        }
+        next();
+    }else if((to.name =='DataAnalysis' || to.name =='AccountMng')&&userInfo&&userInfo.currentMember&&userInfo.currentMember.memberType=='3'){
+        next({
+            name:'InfCollection',
+            query: {
+                _t: new Date().getTime()
+            }
+        });
+    }else if(userInfo){
+        next()
+    } else {
+        next({
+            name: 'Login',
+            query: {
+                _t: new Date().getTime()
+            }
+        });
+    }
+})
 Vue.use(ElementUI)
 new Vue({
     el: '#app',

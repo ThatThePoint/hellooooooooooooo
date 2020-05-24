@@ -127,7 +127,7 @@ export default {
                 subrogationType: null, //代位类型
                 page: 1,
                 pageSize: 10,
-                listType: 1
+                listType: 2
             },
             total: 0,
             roleList: [

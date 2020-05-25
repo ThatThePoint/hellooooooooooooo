@@ -81,10 +81,10 @@ export default {
             roleList: [
                 {
                     roleName: '省公司',
-                    roleId: 2,
+                    roleId: "2",
                 },{
                     roleName: '市公司',
-                    roleId: 3,
+                    roleId: "3",
                 }
             ],
         }

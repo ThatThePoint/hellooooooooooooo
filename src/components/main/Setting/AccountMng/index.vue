@@ -42,10 +42,9 @@
                         <template v-if="item.name == 'status'">
                             <el-switch v-model="scope.row[item.name]" active-color="#13ce66" @change="changeAccountStatus(scope.row)"></el-switch>
                         </template>
-                        <template v-else-if="item.name == 'saleType'">
-                            <span v-if="scope.row[item.name] == 0">经理</span>
-                            <span v-else-if="scope.row[item.name] == 1">线上</span>
-                            <span v-else-if="scope.row[item.name] == 2">线下</span>
+                        <template v-else-if="item.name == 'role'">
+                            <span v-if="scope.row[item.name] == 2">省公司</span>
+                            <span v-else-if="scope.row[item.name] == 3">市公司</span>
                         </template>
                         <template v-else-if="item.name == 'operate'">
                             <!-- <span class="color-btn edit" @click="editAccount">编辑</span>

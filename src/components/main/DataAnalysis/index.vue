@@ -94,7 +94,6 @@
 <script>
 import QueryReset from "common/QueryReset";
 import VPagination from "common/VPagination";
-import axios from "axios";
 // import * as API from 'api/account';
 import { GetCauseList, GetCauseListExcel } from "api/user";
 import {

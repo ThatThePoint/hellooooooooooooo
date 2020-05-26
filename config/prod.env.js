@@ -9,7 +9,8 @@ const test = {
     // 线上
 const production = {
     NODE_ENV: '"production"',
-    BASE_API: '"http://39.100.67.92:5000/api"'
+    // BASE_API: '"http://39.100.67.92:5000/api"'
+    BASE_API: '"http://localhost:5000/api"'
     // BASE_API: '"http://digitalcamp.oicp.io:56031/api"'
 };
 

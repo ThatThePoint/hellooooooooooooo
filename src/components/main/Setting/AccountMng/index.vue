@@ -39,6 +39,9 @@
                     :width="item.width">
                     <template slot-scope="scope">
                         <!-- 账号状态 -->
+                        <template v-if="item.name=='No'" >
+                            <span>{{(form.page - 1) * form.pageSize + scope.$index + 1}}</span>
+                        </template>
                         <template v-if="item.name == 'status'">
                             <el-switch v-model="scope.row[item.name]" active-color="#13ce66" @change="changeAccountStatus(scope.row)"></el-switch>
                         </template>
@@ -127,8 +130,8 @@ export default {
             ],
             headerList: [
                 {
-                    label: '唯一id',
-                    name: 'id',
+                    label: '序号',
+                    name: 'No',
                     width:"130px"
                 },
                 {
@@ -147,10 +150,10 @@ export default {
                     label: '归属城市',
                     name: 'city'
                 },
-                {
-                    label: '更新人',
-                    name: 'modifier'
-                },
+                // {
+                //     label: '更新人',
+                //     name: 'modifier'
+                // },
                 {
                     label: '更新时间',
                     name: 'createTime',
@@ -166,17 +169,7 @@ export default {
                     width:"200px"
                 }
             ],
-            tableData: [
-                {
-                    "id": "52e4c231-1a1d-4a9b-8261-8fcd3819f0ce",
-                    "dutyCity": "苏州",
-                    "name": "helloUpdate",
-                    "loginName": "hello",
-                    "password": "12",
-                    "role": "1",
-                    "alive": 1,
-                    "createTime": "2020-05-20T22:54:49.56"
-                }],
+            tableData: [],
             rowInfo: null
         }
     },
@@ -215,12 +208,7 @@ export default {
         },
         // 重置
         reset () {
-            this.form = {
-                name: null,
-                loginName: null,
-                city: null,
-                role: null
-            }
+            this.$refs['form'].resetFields();
         },
         reload (val,tag) {
             const vm = this;
@@ -244,18 +232,18 @@ export default {
             if(!isRefresh || typeof(isRefresh) == "function"){return false}
             this.getTable();
         },
-        // 状态改变
-        changeAccountStatus (info) {
-            API.updAccountStatus(info.drugUserId,info.status).then((data)=>{
-                if (data) {
-                    this.$message({
-                        type: 'success',
-                        message: '操作成功!',
-                        duration: 5 * 1000
-                    })
-                }
-            })
-        },
+        // // 状态改变
+        // changeAccountStatus (info) {
+        //     API.updAccountStatus(info.drugUserId,info.status).then((data)=>{
+        //         if (data) {
+        //             this.$message({
+        //                 type: 'success',
+        //                 message: '操作成功!',
+        //                 duration: 5 * 1000
+        //             })
+        //         }
+        //     })
+        // },
         // 编辑
         editAccount (info) {
             this.dialogTitle = '编辑账号';
@@ -264,22 +252,22 @@ export default {
             this.editVisible = true;
         },
         // 重置密码
-        resetPwd (info) {
-            this.$confirm('确定重置此账号密码吗?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                API.resetPwd(info.drugUserId).then((data)=>{
-                    if (data) {
-                        this.$message({
-                            type: 'success',
-                            message: '操作成功!'
-                        });
-                    }
-                })
-            })
-        },
+        // resetPwd (info) {
+        //     this.$confirm('确定重置此账号密码吗?', '提示', {
+        //         confirmButtonText: '确定',
+        //         cancelButtonText: '取消',
+        //         type: 'warning'
+        //     }).then(() => {
+        //         API.resetPwd(info.drugUserId).then((data)=>{
+        //             if (data) {
+        //                 this.$message({
+        //                     type: 'success',
+        //                     message: '操作成功!'
+        //                 });
+        //             }
+        //         })
+        //     })
+        // },
         // 删除
         delAccount (row) {
             this.$confirm('确定删除此账号吗?', '提示', {
@@ -287,7 +275,7 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                 DeleteUserinfo({id: row.id}).then((data)=>{
+                DeleteUserinfo({id: row.id}).then((data)=>{
                     if (data.status === 1) {
                         this.$message({
                             type: 'success',
@@ -296,7 +284,10 @@ export default {
                     }
                     this.getTable();
                 }).catch(()=>{
-                    
+                    this.$message({
+                        type: 'waring',
+                        message: '删除失败，请稍后再试'
+                    });
                 })
 
             }).catch(() => {

@@ -59,6 +59,9 @@
                 >
                     <template slot-scope="scope">
                         <!-- 账号状态 -->
+                        <template v-if="item.name=='No'" >
+                            <span>{{(form.page - 1) * form.pageSize + scope.$index + 1}}</span>
+                        </template>
                         <template v-if="item.name == 'status'">
                             <el-switch
                                 v-model="scope.row[item.name]"
@@ -75,7 +78,7 @@
                             <!-- <span class="color-btn edit" @click="editAccount">编辑</span>
                             <span class="color-btn del" @click="delAccount">删除</span>-->
                             <!-- <el-button @click="editAccount(scope.row)" size="mini">编辑</el-button>
-                            <el-button @click="resetPwd(scope.row)" size="mini">重置密码</el-button> -->
+                            <el-button @click="resetPwd(scope.row)" size="mini">重置密码</el-button>-->
                             <!-- <el-button @click="delAccount" size="mini" type="danger" plain>删除</el-button> -->
                         </template>
                         <span v-else>{{scope.row[item.name]}}</span>
@@ -142,8 +145,8 @@ export default {
             // 地市	报案号	立案号	车牌号		事故责任	代位金额	应追偿金额
             headerList: [
                 {
-                    label: "唯一id",
-                    name: "id",
+                    label: "序号",
+                    name: "No",
                     width: "130px"
                 },
                 {
@@ -190,7 +193,7 @@ export default {
                     label: "提交时间",
                     name: "submitTime",
                     width: "175px"
-                },
+                }
             ],
             tableData: [],
             rowInfo: null
@@ -223,9 +226,9 @@ export default {
             GetCauseListExcel(params)
                 .then(data => {
                     const elink = document.createElement("a");
-                    elink.download = '数据分析.xls';
+                    elink.download = "数据分析.xls";
                     elink.style.display = "none";
-                    elink.href =process.env.BASE_API + "/" + data.excelUrl ;
+                    elink.href = process.env.BASE_API + "/" + data.excelUrl;
                     document.body.appendChild(elink);
                     elink.click();
                     URL.revokeObjectURL(elink.href); // 释放URL 对象

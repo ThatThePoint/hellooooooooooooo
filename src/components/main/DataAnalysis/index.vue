@@ -89,7 +89,7 @@
         <v-pagination
             :pageSize="form.pageSize"
             :page="form.page"
-            :total="form.total"
+            :total="total"
             @change="reload"
         ></v-pagination>
     </div>
@@ -187,7 +187,7 @@ export default {
                 },
                 {
                     label: "提交人",
-                    name: "submitPerson"
+                    name: "submitPersonName"
                 },
                 {
                     label: "提交时间",

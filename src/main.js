@@ -15,14 +15,13 @@ Vue.config.productionTip = false
 
 
 router.beforeEach((to, from, next) => {
-    console.log(Cookie.get("userInfo"))
     const userInfo = Cookie.get("userInfo") ? JSON.parse(Cookie.get("userInfo")) : null
 
     // console.log(userInfo)
     // console.log(to)
-    if (to.name == 'Login') {
+    if (to.name == 'Login'  ) {
         if (to.name == 'Login') {
-            if(JSON.parse(Cookie.get("userInfo"))){
+            if(Cookie.get("userInfo")&&JSON.parse(Cookie.get("userInfo"))){
                 Cookie.remove("userInfo")
             }
             next();

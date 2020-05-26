@@ -47,9 +47,9 @@
             </el-form-item>
         </el-form>
         <el-dialog title="提示" :visible.sync="centerDialogVisible" width="30%" center>
-            <span class="juzhong">提交成功</span>
+            <div class="juzhong">报案号:{{form.ReportCode}} 提交成功</div>
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+                <el-button type="primary" @click="confirm">确 定</el-button>
             </span>
         </el-dialog>
 
@@ -97,6 +97,7 @@ export default {
         return {
             saving: false,
             centerDialogVisible: false,
+            ReportCode:null,
             form: {
                 ReportCode: null,
                 RegisterCode: null,
@@ -196,6 +197,10 @@ export default {
         reset(formName) {
             this.$refs[formName].resetFields();
         },
+        confirm(){
+            this.centerDialogVisible = false;
+            this.$refs['accountForm'].resetFields();
+        },
         // 角色列表
         getRole() {
             // const params = {
@@ -269,18 +274,16 @@ export default {
         // 保存
         submit(formName) {
             const vm = this;
-           
+            vm.ReportCode = JSON.stringify(vm.form.ReportCode);
             this.$refs[formName].validate(valid => {
                 if (valid && !vm.saving) {
                     // const params = this.form;
                     vm.saving = true;
-
                     if (!vm.info) {
                         SubmitCauseinfo(vm.form)
                             .then(data => {
                                 if (data.status === 1) {
                                     vm.centerDialogVisible = true;
-                                    this.$refs[formName].resetFields();
                                     // this.$message({
                                     //     type: "success",
                                     //     message: "提交成功!",
@@ -324,6 +327,7 @@ export default {
 <style lang="stylus" scoped>
 .juzhong{
     text-align :center;
+    line-height: 20px;
 }
 .Inf-Collection {
     .title {

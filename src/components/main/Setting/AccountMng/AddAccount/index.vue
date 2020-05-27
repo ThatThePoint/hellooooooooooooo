@@ -15,8 +15,8 @@
                     <el-option v-for="(role,i) in roleList" :key="i" :label="role.roleName" :value="role.roleId"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="归属城市：" prop="city">
-                <el-select size="small" v-model="form.city" placeholder="请选择">
+            <el-form-item label="归属城市：" prop="city" >
+                <el-select size="small" v-model="form.city" placeholder="请选择" >
                     <el-option v-for="(role,i) in cityList" :key="i" :label="role" :value="role"></el-option>
                 </el-select>
             </el-form-item>
@@ -80,7 +80,7 @@ export default {
             },
             roleList: [
                 {
-                    roleName: '省公司',
+                    roleName: '管理员',
                     roleId: "2",
                 },{
                     roleName: '市公司',

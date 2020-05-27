@@ -46,7 +46,7 @@
                             <el-switch v-model="scope.row[item.name]" active-color="#13ce66" @change="changeAccountStatus(scope.row)"></el-switch>
                         </template>
                         <template v-else-if="item.name == 'role'">
-                            <span v-if="scope.row[item.name] == 2">省公司</span>
+                            <span v-if="scope.row[item.name] == 2">管理员</span>
                             <span v-else-if="scope.row[item.name] == 3">市公司</span>
                         </template>
                         <template v-else-if="item.name == 'operate'">
@@ -107,7 +107,7 @@ export default {
                     roleId: 1,
                 },
                 {
-                    roleName: '省公司',
+                    roleName: '管理员',
                     roleId: 2,
                 },{
                     roleName: '市公司',

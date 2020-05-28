@@ -1,18 +1,18 @@
 <template>
     <div class="account-mng">
         <el-form :model="form" ref="form" inline class="form page-search" label-width="90px">
-             <el-form-item label="账号：" prop="drugUserEmail">
+             <el-form-item label="账号：" prop="loginName">
                 <el-input size="small" v-model.trim="form.loginName" clearable placeholder="请输入"></el-input>
             </el-form-item>
-            <el-form-item label="姓名：" prop="drugUserName">
+            <el-form-item label="姓名：" prop="name">
                 <el-input size="small" v-model.trim="form.name" clearable placeholder="请输入"></el-input>
             </el-form-item>
-            <el-form-item label="角色：" prop="roleIdList">
+            <el-form-item label="角色：" prop="role">
                 <el-select size="small" v-model="form.role" clearable placeholder="请选择">
                     <el-option v-for="(role,i) in roleList" :key="i" :label="role.roleName" :value="role.roleId"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="归属城市：" prop="saleType">
+            <el-form-item label="归属城市：" prop="city">
                 <el-select size="small" v-model="form.city"  clearable placeholder="请选择">
                     <el-option v-for="(item,i) in cityList" :key="i" :label="item" :value="item"></el-option>
                 </el-select>

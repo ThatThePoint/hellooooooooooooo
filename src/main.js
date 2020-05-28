@@ -20,12 +20,7 @@ router.beforeEach((to, from, next) => {
     // console.log(userInfo)
     // console.log(to)
     if (to.name == 'Login'  ) {
-        if (to.name == 'Login') {
-            if(Cookie.get("userInfo")&&JSON.parse(Cookie.get("userInfo"))){
-                Cookie.remove("userInfo")
-            }
-            next();
-        }
+        
         next();
     }else if((to.name =='DataAnalysis' || to.name =='AccountMng')&&userInfo&&userInfo.currentMember&&userInfo.currentMember.memberType=='3'){
         next({

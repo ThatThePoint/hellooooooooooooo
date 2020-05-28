@@ -10,8 +10,7 @@
     </div>
 </template>
 <script>
-import * as API from "@/api/secondName";
-import {logoutAccount} from '@/utils/common';
+import Cookie from "js-cookie";
 export default {
     props: {
         userInfo: {
@@ -34,10 +33,11 @@ export default {
     },
     methods: {
         logout(){
-            API.user_logout().then(() => {
-                logoutAccount();
-                this.$router.push('/login')
-            });
+            sessionStorage.removeItem('token')
+            if(Cookie.get("userInfo")&&JSON.parse(Cookie.get("userInfo"))){
+                Cookie.remove("userInfo")
+            }
+            this.$router.push('/login')
         }
     }
 };

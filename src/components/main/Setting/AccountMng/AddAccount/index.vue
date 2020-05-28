@@ -18,7 +18,7 @@
             <el-form-item label="归属城市：" prop="city" >
                 <el-select size="small" v-model="form.city" placeholder="请选择" >
                     <el-option v-for="(role,i) in cityList" :key="i" :label="role" :value="role"></el-option>
-                </el-select>
+                </el-select>    
             </el-form-item>
         </el-form>
         <div class="footer">

@@ -103,10 +103,6 @@ export default {
             },
             roleList: [
                 {
-                    roleName: '全部',
-                    roleId: 1,
-                },
-                {
                     roleName: '管理员',
                     roleId: 2,
                 },{

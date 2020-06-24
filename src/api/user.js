@@ -78,3 +78,12 @@ export function LoadExcel(excelname) {
         method: 'get'
     })
 }
+
+// 删除某条
+
+export function DeleteCause(data) {
+    return fetch({
+        url: `/Home/DeleteCause?${stringify(data)}`,
+        method: 'post',
+    })
+}

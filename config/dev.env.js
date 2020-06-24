@@ -11,6 +11,6 @@ module.exports = merge(prodEnv, {
     // BASE_API: '"http://47.93.122.31:10469/api"',
     // BASE_API: '"http://47.93.122.31:11469/api"',
     // BASE_API: '"http://47.93.122.31:10469/api"', //龙飞
-    // BASE_API:"http://47.93.122.31:10469/api"//线上测试 
+    // BASE_API:'"http://47.93.122.31:10469/api"'//线上测试 
     //
 });

@@ -59,7 +59,7 @@
                 >
                     <template slot-scope="scope">
                         <!-- 账号状态 -->
-                        <template v-if="item.name=='No'" >
+                        <template v-if="item.name=='No'">
                             <span>{{(form.page - 1) * form.pageSize + scope.$index + 1}}</span>
                         </template>
                         <template v-if="item.name == 'status'">
@@ -70,37 +70,36 @@
                             ></el-switch>
                         </template>
                         <template v-else-if="item.name == 'operate'">
-                            <!-- <span class="color-btn edit" @click="editAccount">编辑</span>
-                            <span class="color-btn del" @click="delAccount">删除</span>-->
+                            <!-- <span class="color-btn edit" @click="editAccount">编辑</span> -->
+                            <el-button
+                                @click="delAccount(scope.row)"
+                                size="mini"
+                                plain
+                            >删除</el-button>
                             <!-- <el-button @click="editAccount(scope.row)" size="mini">编辑</el-button>
                             <el-button @click="resetPwd(scope.row)" size="mini">重置密码</el-button>-->
-                            <!-- <el-button @click="delAccount" size="mini" type="danger" plain>删除</el-button> -->
+                            <!-- -->
                         </template>
                         <span v-else>{{scope.row[item.name]}}</span>
                     </template>
                 </el-table-column>
             </template>
         </el-table>
-        <v-pagination
-            :pageSize="form.pageSize"
-            :page="form.page"
-            :total="total"
-            @change="reload"
-        ></v-pagination>
+        <v-pagination :pageSize="form.pageSize" :page="form.page" :total="total" @change="reload"></v-pagination>
     </div>
 </template>
 <script>
 import QueryReset from "common/QueryReset";
 import VPagination from "common/VPagination";
 // import * as API from 'api/account';
-import { GetCauseList, GetCauseListExcel } from "api/user";
+import { GetCauseList, GetCauseListExcel, DeleteCause } from "api/user";
 import {
     DutyList,
     CarTypeList,
     SubrogationTypeList,
     cityList
 } from "@/components/commonData";
-
+import Cookie from 'js-cookie';
 export default {
     components: {
         QueryReset,
@@ -137,12 +136,13 @@ export default {
                     roleId: 3
                 }
             ],
+            userInfo : Cookie.get("userInfo") ? JSON.parse(Cookie.get("userInfo")) : null,
             // 地市	报案号	立案号	车牌号		事故责任	车损险赔付金额	应追偿金额
             headerList: [
                 {
                     label: "序号",
                     name: "No",
-                    width: "130px"
+                    width: "80px"
                 },
                 {
                     label: "地市",
@@ -188,6 +188,10 @@ export default {
                     label: "提交时间",
                     name: "submitTime",
                     width: "175px"
+                },
+                {
+                    label: "操作",
+                    name: "operate",
                 }
             ],
             tableData: [],
@@ -195,8 +199,10 @@ export default {
         };
     },
     created() {
-        this.getRole();
         this.getTable();
+        if(this.userInfo.currentMember.memberType==3){
+            this.headerList = this.headerList.filter(item=>item.name !=='operate')
+        }
     },
     methods: {
         getTable() {
@@ -212,6 +218,7 @@ export default {
                 .catch(() => {
                     vm.loadingTable = false;
                 });
+            
         },
         //导出按钮事件
         exportListToExcel() {
@@ -234,16 +241,6 @@ export default {
                     vm.loadingTable = false;
                 });
         },
-        // 角色列表
-        getRole() {
-            // const params = {
-            //     page: 1,
-            //     pageSize: 999
-            // }
-            // reqRoleList(params).then((data)=>{
-            //     this.roleList = data.content || [];
-            // })
-        },
         // 查询
         query() {
             this.form.page = 1;
@@ -265,16 +262,19 @@ export default {
             vm.getTable();
         },
         // 删除
-        delAccount() {
-            this.$confirm("确定删除此账号吗?", "提示", {
+        delAccount(item) {
+            this.$confirm("确定删除此条吗?", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"
             })
                 .then(() => {
-                    this.$message({
-                        type: "success",
-                        message: "删除成功!"
+                    DeleteCause({causeId:item.id}).then(() => {
+                        this.$message({
+                            type: "success",
+                            message: "删除成功!"
+                        });
+                        this.query()
                     });
                 })
                 .catch(() => {

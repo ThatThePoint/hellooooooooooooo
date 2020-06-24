@@ -137,7 +137,7 @@ export default {
                     roleId: 3
                 }
             ],
-            // 地市	报案号	立案号	车牌号		事故责任	代位金额	应追偿金额
+            // 地市	报案号	立案号	车牌号		事故责任	车损险赔付金额	应追偿金额
             headerList: [
                 {
                     label: "序号",
@@ -173,7 +173,7 @@ export default {
                     name: "subrogationType"
                 },
                 {
-                    label: "代位金额",
+                    label: "车损险赔付金额",
                     name: "subrogationAmount"
                 },
                 {

@@ -31,7 +31,7 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="代位金额（元）：" prop="SubrogationAmount">
+            <el-form-item label="车损险赔付金额（元）：" prop="SubrogationAmount">
                 <el-input
                     size="small"
                     v-model="form.SubrogationAmount"
@@ -146,7 +146,7 @@ export default {
                 SubrogationAmount: [
                     {
                         required: true,
-                        message: "请输入代位金额",
+                        message: "请输入车损险赔付金额",
                         trigger: "blur"
                     }
                 ],

@@ -199,10 +199,11 @@ export default {
         };
     },
     created() {
-        this.getTable();
         if(this.userInfo.currentMember.memberType==3){
             this.headerList = this.headerList.filter(item=>item.name !=='operate')
+            this.form.listType= 1;
         }
+        this.getTable();
     },
     methods: {
         getTable() {

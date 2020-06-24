@@ -22,7 +22,7 @@ router.beforeEach((to, from, next) => {
     if (to.name == 'Login'  ) {
         
         next();
-    }else if((to.name =='DataAnalysis' || to.name =='AccountMng')&&userInfo&&userInfo.currentMember&&userInfo.currentMember.memberType=='3'){
+    }else if(( to.name =='AccountMng')&&userInfo&&userInfo.currentMember&&userInfo.currentMember.memberType=='3'){
         next({
             name:'InfCollection',
             query: {

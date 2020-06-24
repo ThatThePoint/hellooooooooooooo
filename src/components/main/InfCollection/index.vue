@@ -281,15 +281,8 @@ export default {
                     vm.saving = true;
                     if (!vm.info) {
                         SubmitCauseinfo(vm.form)
-                            .then(data => {
-                                if (data.status === 1) {
-                                    vm.centerDialogVisible = true;
-                                    // this.$message({
-                                    //     type: "success",
-                                    //     message: "提交成功!",
-                                    //     duration: 3000
-                                    // });
-                                }
+                            .then(() => {
+                                vm.centerDialogVisible = true;
                             })
                             .catch(() => {
                                 vm.loadingTable = false;

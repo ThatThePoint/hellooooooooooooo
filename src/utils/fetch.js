@@ -36,7 +36,7 @@ service.interceptors.response.use(
     response => {
         const res = response.data || res.excelUrl;
         if (res.status === 1) {
-            return res;
+            return res.data;
         } else {
             if (!msgShowing) {
                 msgShowing = true;

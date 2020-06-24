@@ -211,7 +211,8 @@ export default {
             vm.loadingTable = true;
             GetCauseList(params)
                 .then(data => {
-                    this.tableData = data.causelist || [];
+                    // console.log(data,111111)
+                    this.tableData = data.list || [];
                     this.total = data.total || 0;
                     vm.loadingTable = false;
                 })

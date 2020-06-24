@@ -105,30 +105,26 @@ export default {
                     const params = this.form;
                     vm.saving = true;
                     if (!vm.info) {
-                        AddUserinfo(params).then((data)=>{
+                        AddUserinfo(params).then(()=>{
                             vm.saving = false;
-                            if (data) {
-                                this.$message({
-                                    type: 'success',
-                                    message: '保存成功!',
-                                    duration: 5 * 1000
-                                })
-                                this.cancel(true);
-                            }
+                            this.$message({
+                                type: 'success',
+                                message: '保存成功!',
+                                duration: 5 * 1000
+                            })
+                            this.cancel(true);
                         }).catch(()=>{
                             vm.saving = false;
                         })
                     } else {
-                        UpdateUserinfo(params).then((data)=>{
+                        UpdateUserinfo(params).then(()=>{
                             vm.saving = false;
-                            if (data) {
-                                this.$message({
-                                    type: 'success',
-                                    message: '保存成功!',
-                                    duration: 5 * 1000
-                                })
-                                this.cancel(true);
-                            }
+                            this.$message({
+                                type: 'success',
+                                message: '保存成功!',
+                                duration: 5 * 1000
+                            })
+                            this.cancel(true);
                         }).catch(()=>{
                             vm.saving = false;
                         })

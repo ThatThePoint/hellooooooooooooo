@@ -183,7 +183,7 @@ export default {
             const params = this.form;
             vm.loadingTable = true;
             GetUserList(params).then((data)=>{
-                this.tableData = data.userlist || [];
+                this.tableData = data.list || [];
                 this.form.total = data.total || 0;
                 this.loadingTable = false;
             }).catch(()=>{
@@ -275,13 +275,11 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                DeleteUserinfo({id: row.id}).then((data)=>{
-                    if (data.status === 1) {
-                        this.$message({
-                            type: 'success',
-                            message: '删除成功!'
-                        });
-                    }
+                DeleteUserinfo({id: row.id}).then(()=>{
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
                     this.getTable();
                 }).catch(()=>{
                     this.$message({

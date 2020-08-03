@@ -35,6 +35,15 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item label="筛选月份：" prop="searchMonth">
+                 <el-date-picker
+                    size="small"
+                    v-model="form.searchMonth"
+                    type="month"
+                    value-format="yyyy-MM"
+                    placeholder="选择月">
+                    </el-date-picker>
+            </el-form-item>
         </el-form>
         <query-reset @query="query" @reset="reset('form')"></query-reset>
         <div class="right">
@@ -123,7 +132,8 @@ export default {
                 subrogationType: null, //代位类型
                 page: 1,
                 pageSize: 10,
-                listType: 2
+                listType: 2,
+                searchMonth:''
             },
             total: 0,
             roleList: [

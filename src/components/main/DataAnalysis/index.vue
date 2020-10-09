@@ -235,9 +235,9 @@ export default {
         //导出按钮事件
         exportListToExcel() {
             const vm = this;
-            const params = this.form;
+            // const params = this.form;
             vm.loadingTable = true;
-            GetCauseListExcel(params)
+            GetCauseListExcel({searchMonth:this.form.searchMonth})
                 .then(data => {
                     const elink = document.createElement("a");
                     elink.download = "数据分析.xls";

@@ -42,6 +42,13 @@
             <el-form-item label="应追偿金额（元）：" prop="ShouldAmount">
                 <el-input size="small" v-model="form.ShouldAmount" type="number" placeholder="请输入"></el-input>
             </el-form-item>
+            <el-form-item label="提交月份：" prop="SubmitMonth">
+                 <el-date-picker
+                    v-model="form.SubmitMonth"
+                    type="month"
+                    placeholder="选择月">
+                </el-date-picker>
+            </el-form-item>
             <el-form-item label="备注：" prop="Note">
                 <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="form.Note"></el-input>
             </el-form-item>
@@ -60,7 +67,7 @@
     </div>
 </template>
 <script>
-import { isMobileOrPhone } from "@/utils/common";
+import { isMobileOrPhone ,formatDate} from "@/utils/common";
 import { SubmitCauseinfo } from "api/user";
 import {
     DutyList,
@@ -107,7 +114,8 @@ export default {
                 saleType: null,
                 SubrogationType: null,
                 ShouldAmount: null,
-                Note: null
+                Note: null,
+                SubmitMonth: formatDate(new Date() , 'yyyy-MM')
             },
             DutyList,
             CarTypeList,

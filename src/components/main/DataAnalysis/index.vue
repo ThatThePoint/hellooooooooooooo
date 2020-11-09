@@ -200,7 +200,7 @@ export default {
                 page: 1,
                 pageSize: 10,
                 listType: 2,
-                searchMonth: "",
+                searchMonth: [],
             },
             total: 0,
             roleList: [
@@ -290,8 +290,9 @@ export default {
         getTable() {
             const vm = this;
             const params = this.form;
+            console.log('this.form', this.form)
             vm.loadingTable = true;
-            GetCauseList(params)
+            GetCauseList({...params,searchMonth:this.form.searchMonth ? this.form.searchMonth.join(',') : ''})
                 .then((data) => {
                     // console.log(data,111111)
                     this.tableData = data.list || [];
@@ -307,7 +308,7 @@ export default {
             const vm = this;
             // const params = this.form;
             vm.loadingTable = true;
-            GetCauseListExcel({ searchMonth: this.form.searchMonth })
+            GetCauseListExcel({ searchMonth:this.form.searchMonth ? this.form.searchMonth.join(',') : '' })
                 .then((data) => {
                     const elink = document.createElement("a");
                     elink.download = "数据分析.xls";

@@ -46,7 +46,6 @@
                  <el-date-picker
                     v-model="form.SubmitTime"
                     type="date"
-                     value-format="yyyy-MM-dd"
                     placeholder="选择月">
                 </el-date-picker>
             </el-form-item>
@@ -116,7 +115,7 @@ export default {
                 SubrogationType: null,
                 ShouldAmount: null,
                 Note: null,
-                SubmitTime: formatDate(new Date() , 'yyyy-MM-dd')
+                SubmitTime: new Date() 
             },
             DutyList,
             CarTypeList,

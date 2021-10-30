@@ -1,37 +1,108 @@
 <template>
     <div class="Inf-Collection">
         <p class="title">信息提交</p>
-        <el-form :model="form" ref="accountForm" :rules="rules" class="form" label-width="160px">
+        <el-form
+            :model="form"
+            ref="accountForm"
+            :rules="rules"
+            class="form"
+            label-width="160px"
+        >
+            <el-form-item label="客户类型：" prop="CarAttr">
+                <el-select
+                    size="small"
+                    v-model="form.CarAttr"
+                    placeholder="请选择"
+                >
+                    <el-option
+                        v-for="(role, i) in CarAttrList"
+                        :key="i"
+                        :label="role.name"
+                        :value="role.id"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="追偿方式：" prop="ShouldType">
+                <el-select
+                    size="small"
+                    v-model="form.ShouldType"
+                    placeholder="请选择"
+                >
+                    <el-option
+                        v-for="(role, i) in ShouldTypeList"
+                        :key="i"
+                        :label="role.name"
+                        :value="role.id"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
             <el-form-item label="报案号：" prop="ReportCode">
-                <el-input size="small" v-model="form.ReportCode" placeholder="请输入"></el-input>
+                <el-input
+                    size="small"
+                    v-model="form.ReportCode"
+                    placeholder="请输入"
+                ></el-input>
             </el-form-item>
             <el-form-item label="立案号：" prop="RegisterCode">
-                <el-input size="small" v-model="form.RegisterCode" placeholder="请输入"></el-input>
+                <el-input
+                    size="small"
+                    v-model="form.RegisterCode"
+                    placeholder="请输入"
+                ></el-input>
             </el-form-item>
             <el-form-item label="车牌号：" prop="Plate">
-                <el-input size="small" v-model="form.Plate" placeholder="请输入"></el-input>
+                <el-input
+                    size="small"
+                    v-model="form.Plate"
+                    placeholder="请输入"
+                ></el-input>
             </el-form-item>
             <el-form-item label="车辆类型：" prop="CarType">
-                <el-select size="small" v-model="form.CarType" placeholder="请选择">
-                    <el-option v-for="(role,i) in CarTypeList" :key="i" :label="role" :value="role"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="事故责任：" prop="Duty">
-                <el-select size="small" v-model="form.Duty" placeholder="请选择">
-                    <el-option v-for="(role,i) in DutyList" :key="i" :label="role" :value="role"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="代位类型：" prop="SubrogationType">
-                <el-select size="small" v-model="form.SubrogationType" placeholder="请选择">
+                <el-select
+                    size="small"
+                    v-model="form.CarType"
+                    placeholder="请选择"
+                >
                     <el-option
-                        v-for="(role,i) in SubrogationTypeList"
+                        v-for="(role, i) in CarTypeList"
                         :key="i"
                         :label="role"
                         :value="role"
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="车损险赔付金额（元）：" prop="SubrogationAmount">
+            <el-form-item label="事故责任：" prop="Duty">
+                <el-select
+                    size="small"
+                    v-model="form.Duty"
+                    placeholder="请选择"
+                >
+                    <el-option
+                        v-for="(role, i) in DutyList"
+                        :key="i"
+                        :label="role"
+                        :value="role"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="代位类型：" prop="SubrogationType">
+                <el-select
+                    size="small"
+                    v-model="form.SubrogationType"
+                    placeholder="请选择"
+                >
+                    <el-option
+                        v-for="(role, i) in SubrogationTypeList"
+                        :key="i"
+                        :label="role"
+                        :value="role"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item
+                label="车损险赔付金额（元）："
+                prop="SubrogationAmount"
+            >
                 <el-input
                     size="small"
                     v-model="form.SubrogationAmount"
@@ -40,53 +111,76 @@
                 ></el-input>
             </el-form-item>
             <el-form-item label="应追偿金额（元）：" prop="ShouldAmount">
-                <el-input size="small" v-model="form.ShouldAmount" type="number" placeholder="请输入"></el-input>
+                <el-input
+                    size="small"
+                    v-model="form.ShouldAmount"
+                    type="number"
+                    placeholder="请输入"
+                ></el-input>
             </el-form-item>
             <el-form-item label="提交月份：" prop="SubmitMonth">
-                 <el-date-picker
+                <el-date-picker
                     v-model="form.SubmitTime"
                     type="date"
-                    placeholder="选择月">
+                    placeholder="选择月"
+                >
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="备注：" prop="Note">
-                <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="form.Note"></el-input>
+                <el-input
+                    type="textarea"
+                    :rows="4"
+                    placeholder="请输入内容"
+                    v-model="form.Note"
+                ></el-input>
             </el-form-item>
         </el-form>
-        <el-dialog title="提示" :visible.sync="centerDialogVisible" width="30%" center>
-            <div class="juzhong">报案号:{{form.ReportCode}} 提交成功</div>
+        <el-dialog
+            title="提示"
+            :visible.sync="centerDialogVisible"
+            width="30%"
+            center
+        >
+            <div class="juzhong">报案号:{{ form.ReportCode }} 提交成功</div>
             <span slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="confirm">确 定</el-button>
             </span>
         </el-dialog>
 
         <div class="footer">
-            <el-button size="large" @click="reset('accountForm')">重置</el-button>
-            <el-button size="large" type="primary" @click="submit('accountForm')">提交</el-button>
+            <el-button size="large" @click="reset('accountForm')"
+                >重置</el-button
+            >
+            <el-button
+                size="large"
+                type="primary"
+                @click="submit('accountForm')"
+                >提交</el-button
+            >
         </div>
     </div>
 </template>
 <script>
-import { isMobileOrPhone ,formatDate} from "@/utils/common";
+import { isMobileOrPhone, formatDate } from "@/utils/common";
 import { SubmitCauseinfo } from "api/user";
 import {
     DutyList,
     CarTypeList,
     SubrogationTypeList,
-    cityList
+    cityList,
 } from "@/components/commonData";
 export default {
     props: {
         addOrEdit: {
             type: String,
-            default: "add"
+            default: "add",
         },
         info: {
             type: Object,
-            dafault: function() {
+            dafault: function () {
                 return this.formTemp;
-            }
-        }
+            },
+        },
     },
     // computed: {
     //     form () {
@@ -104,8 +198,10 @@ export default {
         return {
             saving: false,
             centerDialogVisible: false,
-            ReportCode:null,
+            ReportCode: null,
             form: {
+                CarAttr: null,
+                ShouldType: null,
                 ReportCode: null,
                 RegisterCode: null,
                 Plate: null,
@@ -115,82 +211,132 @@ export default {
                 SubrogationType: null,
                 ShouldAmount: null,
                 Note: null,
-                SubmitTime: new Date() 
+                SubmitTime: new Date(),
             },
             DutyList,
             CarTypeList,
             SubrogationTypeList,
             rules: {
+                CarAttr: [
+                    {
+                        required: true,
+                        message: "请选择客户类型",
+                        trigger: "change",
+                    },
+                ],
+                ShouldType: [
+                    {
+                        required: true,
+                        message: "请选择追偿方式",
+                        trigger: "change",
+                    },
+                ],
                 ReportCode: [
-                    { required: true, message: "请输入报案号", trigger: "blur" }
+                    {
+                        required: true,
+                        message: "请输入报案号",
+                        trigger: "blur",
+                    },
                 ],
                 RegisterCode: [
-                    { required: true, message: "请输入立案号", trigger: "blur" }
+                    {
+                        required: true,
+                        message: "请输入立案号",
+                        trigger: "blur",
+                    },
                 ],
                 Plate: [
-                    { required: true, message: "请输入车牌号", trigger: "blur" }
+                    {
+                        required: true,
+                        message: "请输入车牌号",
+                        trigger: "blur",
+                    },
                 ],
                 CarType: [
                     {
                         required: true,
                         message: "请选择车辆类型",
-                        trigger: "change"
-                    }
+                        trigger: "change",
+                    },
                 ],
                 Duty: [
                     {
                         required: true,
                         message: "请选择事故责任",
-                        trigger: "change"
-                    }
+                        trigger: "change",
+                    },
                 ],
                 SubrogationType: [
                     {
                         required: true,
                         message: "请选择代位类型",
-                        trigger: "change"
-                    }
+                        trigger: "change",
+                    },
                 ],
                 SubrogationAmount: [
                     {
                         required: true,
                         message: "请输入车损险赔付金额",
-                        trigger: "blur"
-                    }
+                        trigger: "blur",
+                    },
                 ],
                 ShouldAmount: [
                     {
                         required: true,
                         message: "请输入应追偿金额",
-                        trigger: "blur"
-                    }
+                        trigger: "blur",
+                    },
                 ],
                 Note: [
                     {
                         required: false,
                         message: "请选择备注",
-                        trigger: "change"
-                    }
-                ]
+                        trigger: "change",
+                    },
+                ],
             },
+            ShouldTypeList: [
+                {
+                    name: "自追",
+                    id: 1,
+                },
+                {
+                    name: "诉讼",
+                    id: 2,
+                },
+                {
+                    name: "委托第三方",
+                    id: 3,
+                },
+            ],
+            CarAttrList: [
+                {
+                    name: "团体",
+                    id: 1,
+                },
+                {
+                    name: "个人",
+                    id: 2,
+                },
+            ],
             roleList: [],
             typeList: [
                 {
                     name: "经理",
-                    id: 0
+                    id: 0,
                 },
                 {
                     name: "线上",
-                    id: 1
+                    id: 1,
                 },
                 {
                     name: "线下",
-                    id: 2
-                }
+                    id: 2,
+                },
             ],
             enterpriseList: [],
             projectList: [],
-            productList: []
+            productList: [],
         };
     },
     created() {},
@@ -205,9 +351,9 @@ export default {
         reset(formName) {
             this.$refs[formName].resetFields();
         },
-        confirm(){
+        confirm() {
             this.centerDialogVisible = false;
-            this.$refs['accountForm'].resetFields();
+            this.$refs["accountForm"].resetFields();
         },
         // 角色列表
         getRole() {
@@ -281,9 +427,10 @@ export default {
         // },
         // 保存
         submit(formName) {
+            console.log(`this.form`, this.form);
             const vm = this;
             vm.ReportCode = JSON.stringify(vm.form.ReportCode);
-            this.$refs[formName].validate(valid => {
+            this.$refs[formName].validate((valid) => {
                 if (valid && !vm.saving) {
                     // const params = this.form;
                     vm.saving = true;
@@ -291,9 +438,11 @@ export default {
                         SubmitCauseinfo(vm.form)
                             .then(() => {
                                 vm.centerDialogVisible = true;
+                                 vm.saving = false;
                             })
                             .catch(() => {
                                 vm.loadingTable = false;
+                                 vm.saving = false;
                             });
                     } else {
                         // API.updAccount(params).then((data)=>{
@@ -321,15 +470,16 @@ export default {
         },
         inputNum(field) {
             this.form[field] = this.form[field].replace(/[^\d]/g, "");
-        }
-    }
+        },
+    },
 };
 </script>
 <style lang="stylus" scoped>
-.juzhong{
-    text-align :center;
+.juzhong {
+    text-align: center;
     line-height: 20px;
 }
+
 .Inf-Collection {
     .title {
         text-align: left;

@@ -7,6 +7,34 @@
             class="form page-search"
             label-width="90px"
         >
+                    <el-form-item label="客户类型：" prop="carAttr">
+                <el-select
+                    size="small"
+                    v-model="form.carAttr"
+                    placeholder="请选择"
+                >
+                    <el-option
+                        v-for="(item, i) in CarAttrList"
+                        :key="i"
+                        :label="item.name"
+                        :value="item.id"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+                        <el-form-item label="追偿方式：" prop="shouldType">
+                <el-select
+                    size="small"
+                    v-model="form.shouldType"
+                    placeholder="请选择"
+                >
+                    <el-option
+                        v-for="(item, i) in ShouldTypeList"
+                        :key="i"
+                        :label="item.name"
+                        :value="item.id"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
             <el-form-item label="报案号：" prop="reportCode">
                 <el-input
                     size="small"
@@ -132,12 +160,18 @@
                                 1
                             }}</span>
                         </template>
-                        <template v-if="item.name == 'status'">
-                            <el-switch
-                                v-model="scope.row[item.name]"
-                                active-color="#13ce66"
-                                @change="changeAccountStatus(scope.row)"
-                            ></el-switch>
+                         <template v-if="item.name == 'No'">
+                            <span>{{
+                                (form.page - 1) * form.pageSize +
+                                scope.$index +
+                                1
+                            }}</span>
+                        </template>
+                        <template v-if="item.name == 'carAttr'">
+                           <span>{{CarAttrList.find(e=>e.id===scope.row[item.name]).name}}</span>
+                        </template>
+                         <template v-else-if="item.name == 'shouldType'">
+                           <span>{{ShouldTypeList.find(e=>e.id===scope.row[item.name]).name}}</span>
                         </template>
                         <template v-else-if="item.name == 'operate'">
                             <!-- <span class="color-btn edit" @click="editAccount">编辑</span> -->
@@ -147,9 +181,6 @@
                                 plain
                                 >删除</el-button
                             >
-                            <!-- <el-button @click="editAccount(scope.row)" size="mini">编辑</el-button>
-                            <el-button @click="resetPwd(scope.row)" size="mini">重置密码</el-button>-->
-                            <!-- -->
                         </template>
                         <span v-else>{{ scope.row[item.name] }}</span>
                     </template>
@@ -190,6 +221,8 @@ export default {
             SubrogationTypeList,
             cityList,
             form: {
+                shouldType:null,
+                carAttr:null, // 
                 reportCode: null, //报案号
                 registerCode: null, //立案号
                 plate: null, //车牌号
@@ -202,6 +235,39 @@ export default {
                 listType: 2,
                 searchMonth: [],
             },
+
+            ShouldTypeList: [
+                {
+                    name: "自追",
+                    id: 1,
+                },
+                {
+                    name: "诉讼",
+                    id: 2,
+                },
+                {
+                    name: "委托第三方",
+                    id: 3,
+                },
+                 {
+                    name: "未知",
+                    id:0,
+                },
+            ],
+            CarAttrList: [
+                 {
+                    name: "未知",
+                    id:0,
+                },
+                {
+                    name: "团体",
+                    id: 1,
+                },
+                {
+                    name: "个人",
+                    id: 2,
+                },
+            ],
             total: 0,
             roleList: [
                 {
@@ -226,6 +292,14 @@ export default {
                 {
                     label: "地市",
                     name: "city",
+                },
+                {
+                    label: "客户类型",
+                    name: "carAttr", 
+                },
+                {
+                    label: "追偿方式",
+                    name: "shouldType", 
                 },
                 {
                     label: "报案号",

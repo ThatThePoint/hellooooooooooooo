@@ -153,13 +153,6 @@
                 >
                     <template slot-scope="scope">
                         <!-- 账号状态 -->
-                        <template v-if="item.name == 'No'">
-                            <span>{{
-                                (form.page - 1) * form.pageSize +
-                                scope.$index +
-                                1
-                            }}</span>
-                        </template>
                          <template v-if="item.name == 'No'">
                             <span>{{
                                 (form.page - 1) * form.pageSize +
